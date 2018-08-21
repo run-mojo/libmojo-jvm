@@ -1,4 +1,4 @@
-package run.mojo.future;
+package run.mojo;
 
 /**
  *
@@ -7,7 +7,7 @@ public class Result<T, E> {
   public final T ok;
   public final E err;
 
-  Result(T ok, E err) {
+  protected Result(T ok, E err) {
     this.ok = ok;
     this.err = err;
   }

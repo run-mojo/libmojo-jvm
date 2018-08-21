@@ -1,7 +1,7 @@
 package run.mojo.actor;
 
 /**
- * An Actor Type arbiter.
+ * An MetalActor Type arbiter.
  */
 public class Supervisor {
 

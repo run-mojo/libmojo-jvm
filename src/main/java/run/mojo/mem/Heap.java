@@ -8,9 +8,9 @@ package run.mojo.mem;
  *
  * First Tenant: OWNERSHIP
  *
- * Long held memory should exist in the runtime / Drivers, Actor or a Stream Processor.
+ * Long held memory should exist in the runtime / Drivers, MetalActor or a Stream Processor.
  * Anything outside of that becomes rogue and the developer should fix in
- * the future.
+ * the channel.
  */
 public class Heap {
 

@@ -8,6 +8,7 @@ import run.mojo.MojoError;
 import run.mojo.MojoError.Code;
 import run.mojo.actor.ActorSystem;
 import run.mojo.actor.Addr;
+import run.mojo.http.ContentEncoding;
 
 /**
  *

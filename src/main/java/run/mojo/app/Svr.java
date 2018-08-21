@@ -26,7 +26,7 @@ public class Svr<T> {
   private SvrBuilder<T> builder;
   // SystemAribiter
   private Addr<?> arbiter;
-  // Actor System
+  // MetalActor System
   private ActorSystem system;
 
   Svr(SvrBuilder<T> builder) {

@@ -8,6 +8,8 @@ import run.mojo.app.Svr.WorkerStopping;
 public class Example {
 
   public static void main(String[] args) {
+    // Create an injector.
+
     Svr.builder(
         // State factory. Called for each worker.
         State::new,

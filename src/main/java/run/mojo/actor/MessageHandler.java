@@ -3,6 +3,6 @@ package run.mojo.actor;
 /**
  *
  */
-public class Message<R> {
+public class MessageHandler {
 
 }

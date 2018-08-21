@@ -1,4 +1,4 @@
-package run.mojo.app;
+package run.mojo.http;
 
 /**
  * Represents supported types of content encodings.

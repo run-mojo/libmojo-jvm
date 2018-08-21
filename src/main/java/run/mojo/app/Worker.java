@@ -1,6 +1,6 @@
 package run.mojo.app;
 
-import run.mojo.actor.Actor;
+import run.mojo.actor.MetalActor;
 import run.mojo.actor.Addr;
 
 /**
@@ -15,7 +15,7 @@ public class Worker {
    *
    * @param actor
    */
-  public void spawn(Actor actor) {
+  public void spawn(MetalActor actor) {
 
   }
 }
