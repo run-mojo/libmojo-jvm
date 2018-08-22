@@ -5,10 +5,10 @@ import run.mojo.actor.MetalActor;
 /**
  *
  */
-public class HttpMetalActor<
+public class HttpActor<
     // <A, S>
-    // A = HttpMetalActor
-    A extends HttpMetalActor<A, S>,
+    // A = HttpActor
+    A extends HttpActor<A, S>,
     // S = ?AppState
     S>
     // extends MetalActor

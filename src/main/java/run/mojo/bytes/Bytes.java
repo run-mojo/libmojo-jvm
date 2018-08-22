@@ -10,6 +10,14 @@ public class Bytes {
   private long handle;
   private volatile int state;
 
+  protected Bytes(long handle) {
+    this.handle = handle;
+  }
+
+  public static Bytes from(long handle) {
+    return new Bytes(handle);
+  }
+
   protected long handle() {
     return handle;
   }

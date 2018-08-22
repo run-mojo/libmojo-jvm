@@ -3,10 +3,11 @@ package run.mojo.resp;
 import run.mojo.mem.Box;
 
 /**
- * Wrapper around the Native RespValue type. It represents a Redis value.
+ * Wrapper around the Metal RespValue type. It represents a Redis value.
  * Should never hold onto RespValue instances as it points to native memory.
  * Instead it should be utilized as an intermediate format from the raw
- * network stream to a java specific representation.
+ * network stream to a java specific representation. This is a framework
+ * level API in general, so app developers will likely never deal with it.
  */
 public class RespValue extends Box {
   public static final RespValue NIL_VALUE = new RespValue();

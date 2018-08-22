@@ -5,5 +5,5 @@ import run.mojo.mem.Box;
 /**
  *
  */
-public class WebSocketContext extends Box {
+public class WebSocketContext {
 }

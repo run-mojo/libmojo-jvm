@@ -3,6 +3,6 @@ package run.mojo.actor;
 /**
  *
  */
-public interface StreamHandler {
+public class Reactor {
 
 }

@@ -11,7 +11,7 @@ public class Example {
     // Create an injector.
 
     Svr.builder(
-        // State factory. Called for each worker.
+        // State factory. Called for each reactor.
         State::new,
         // Number of slices to start.
         1,

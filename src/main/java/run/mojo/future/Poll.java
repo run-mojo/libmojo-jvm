@@ -7,11 +7,11 @@ import run.mojo.Result;
  *
  */
 public class Poll<T> extends Result<T, Throwable> {
-  protected Poll(T ok, MojoError err) {
+  private Poll(T ok, MojoError err) {
     super(ok, err);
   }
 
-  protected Poll(Throwable err) {
+  private Poll(Throwable err) {
     super(null, err);
   }
 

@@ -13,7 +13,7 @@ public class Main {
   }
 
   public static void main(String[] args) throws Throwable {
-//    Async.init();
+//    AsyncResult.init();
 
 //    var server = new ServerBuilder()
 //        .bind("localhost:8000")

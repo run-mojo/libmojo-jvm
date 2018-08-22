@@ -11,8 +11,6 @@ public class Slice {
   private final ArrayList<RespActor> nodes =
       new ArrayList<>(8);
 
-
-
   /**
    *
    */

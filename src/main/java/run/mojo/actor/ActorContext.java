@@ -4,14 +4,19 @@ import java.time.Duration;
 import java.util.function.BiConsumer;
 
 /**
- * Actix MetalActor context. The user-defined MetalActor is just a POJO.
+ * Actix Actor context. This is the system companion to the
+ * user-defined Pojo Actor subclass.
  */
 public class ActorContext<A extends MetalActor> {
 
   private long handle;
 
-  ActorContext(long handle) {
+  protected ActorContext(long handle) {
     this.handle = handle;
+  }
+
+  public long handle() {
+    return handle;
   }
 
   public void stop() {
@@ -19,7 +24,7 @@ public class ActorContext<A extends MetalActor> {
   }
 
   public void terminate() {
-    Native.stop(handle);
+    Native.terminate(handle);
   }
 
   public ActorState state() {
@@ -46,6 +51,15 @@ public class ActorContext<A extends MetalActor> {
     return true;
   }
 
+
+  public void forceSend(Message msg) {
+
+  }
+
+  public void trySend(Message msg) {
+
+  }
+
   public void send(Message msg) {
 
   }
@@ -66,5 +80,22 @@ public class ActorContext<A extends MetalActor> {
       BiConsumer<A, ActorContext<A>> fn
   ) {
     return 0L;
+  }
+
+  /**
+   * Handle of the running future.
+   *
+   * @return pointer to SpawnHandle
+   */
+  public long currentHandle() {
+    return 0L;
+  }
+
+  public long capacity() {
+    return 0L;
+  }
+
+  public ActorContext<A> capacity(long cap) {
+    return this;
   }
 }

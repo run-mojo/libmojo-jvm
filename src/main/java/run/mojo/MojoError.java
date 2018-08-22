@@ -39,8 +39,11 @@ public class MojoError extends RuntimeException {
     UNKNOWN(99),
     BIND(100),
     APP(101),
+    CANCELED(120),
+    TIMEOUT(121),
     BAD_INPUT(300),
-    NOMEM(200),;
+    NOMEM(200),
+    NOT_FOUND(404);
 
     public final int code;
 

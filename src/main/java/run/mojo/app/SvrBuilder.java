@@ -25,11 +25,11 @@ public class SvrBuilder<S> {
   public int shutdownTimeout;
   public boolean noHttp2;
 
-  ArrayList<Worker<S>> workers;
+  ArrayList<Reactor<S>> reactors;
 
 
-  SvrBuilder(ArrayList<Worker<S>> workers) {
-    this.workers = workers;
+  SvrBuilder(ArrayList<Reactor<S>> reactors) {
+    this.reactors = reactors;
   }
 
   public static <S> Route<S> defaultRoute(Resource resource) {
@@ -170,7 +170,7 @@ public class SvrBuilder<S> {
   /**
    * A self-contained event-loop with it's own state, routing and middleware.
    */
-  public static class Worker<S> {
+  public static class Reactor<S> {
 
     public final SvrBuilder<S> builder;
     public final int index;
@@ -186,18 +186,18 @@ public class SvrBuilder<S> {
     public Addr<?> arbiter;
     public ActorSystem system;
 
-    Worker(SvrBuilder<S> builder, int index, S state) {
+    Reactor(SvrBuilder<S> builder, int index, S state) {
       this.builder = builder;
       this.index = index;
       this.state = state;
     }
 
-    public Worker<S> prefix(String prefix) {
+    public Reactor<S> prefix(String prefix) {
       this.prefix = prefix;
       return this;
     }
 
-    public Worker<S> resource(String path, Consumer<Resource<S>> fn) {
+    public Reactor<S> resource(String path, Consumer<Resource<S>> fn) {
       final Resource<S> resource = new Resource<>(builder, this, path);
       if (resources.containsKey(path)) {
         throw new MojoError("path '" + path + "' already exists", Code.BAD_INPUT);
@@ -225,23 +225,23 @@ public class SvrBuilder<S> {
   /**
    * *Resource* is an entry in route table which corresponds to requested URL.
    *
-   * Resource in turn has at least one route. Route consists of an object that implements `Handler`
+   * Resource in turn has at least one route. Route consists of an object that implements `HttpHandler`
    * trait (handler) and list of predicates (objects that implement `Predicate` trait). Route uses
-   * builder-like pattern for configuration. During request handling, resource object iterate
+   * builder-like action for configuration. During request handling, resource object iterate
    * through all routes and check all predicates for specific route, if request matches all
    * predicates route route considered matched and route handler get called.
    */
   public static class Resource<S> {
 
     public final SvrBuilder<S> builder;
-    public final Worker<S> worker;
+    public final Reactor<S> reactor;
     public final String path;
     public ArrayList<Middleware> middlewares;
     public final ArrayList<Route> routes = new ArrayList<>();
 
-    Resource(SvrBuilder<S> builder, Worker<S> worker, String path) {
+    Resource(SvrBuilder<S> builder, Reactor<S> reactor, String path) {
       this.builder = builder;
-      this.worker = worker;
+      this.reactor = reactor;
       this.path = path;
     }
 

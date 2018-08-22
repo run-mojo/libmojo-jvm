@@ -10,6 +10,7 @@ import run.mojo.MojoError;
 import run.mojo.MojoError.Code;
 import run.mojo.actor.ActorSystem;
 import run.mojo.actor.Addr;
+import run.mojo.app.SvrBuilder.Reactor;
 
 /**
  * Server s
@@ -31,9 +32,9 @@ public class Svr<T> {
 
   Svr(SvrBuilder<T> builder) {
     this.builder = builder;
-    this.slices = new ArrayList<>(builder.workers.size());
-    for (int i = 0; i < builder.workers.size(); i++) {
-      final Slice<T> slice = new Slice<>(this, builder.workers.get(i));
+    this.slices = new ArrayList<>(builder.reactors.size());
+    for (int i = 0; i < builder.reactors.size(); i++) {
+      final Slice<T> slice = new Slice<>(this, builder.reactors.get(i));
       this.slices.add(slice);
     }
   }
@@ -41,7 +42,7 @@ public class Svr<T> {
   public static <T> SvrBuilder<T> builder(
       Supplier<T> provider,
       int slices,
-      Consumer<SvrBuilder.Worker<T>> factory) {
+      Consumer<Reactor<T>> factory) {
     if (factory == null) {
       throw new MojoError("builder factory must be supplied", Code.BAD_INPUT);
     }
@@ -50,8 +51,8 @@ public class Svr<T> {
 
     for (int i = 0; i < slices; i++) {
       final T state = provider.get();
-      final SvrBuilder.Worker<T> app = new SvrBuilder.Worker<>(builder, i, state);
-      builder.workers.add(app);
+      final Reactor<T> app = new Reactor<>(builder, i, state);
+      builder.reactors.add(app);
 
       factory.accept(app);
     }
@@ -262,7 +263,7 @@ public class Svr<T> {
   public static class Slice<T> {
 
     public final Svr<T> svr;
-    public final SvrBuilder.Worker<T> builder;
+    public final Reactor<T> builder;
     public final int index;
     public final T state;
 
@@ -271,7 +272,7 @@ public class Svr<T> {
     private Addr<?> arbiter;
     private ActorSystem system;
 
-    public Slice(Svr<T> svr, SvrBuilder.Worker<T> builder) {
+    public Slice(Svr<T> svr, Reactor<T> builder) {
       this.svr = svr;
       this.builder = builder;
       this.index = builder.index;

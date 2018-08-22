@@ -1,13 +1,19 @@
 package run.mojo.actor;
 
 /**
- *
+ * Actor execution state.
  */
 public enum ActorState {
-  STARTED,
-  RUNNING,
-  STOPPING,
-  STOPPED,;
+  STARTED(0),
+  RUNNING(1),
+  STOPPING(2),
+  STOPPED(3),;
+
+  public final int code;
+
+  ActorState(int code) {
+    this.code = code;
+  }
 
   public boolean isAlive() {
     return this == STARTED || this == RUNNING;
