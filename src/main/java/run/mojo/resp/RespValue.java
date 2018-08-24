@@ -9,7 +9,7 @@ import run.mojo.mem.Box;
  * network stream to a java specific representation. This is a framework
  * level API in general, so app developers will likely never deal with it.
  */
-public class RespValue extends Box {
+public class RespValue {
   public static final RespValue NIL_VALUE = new RespValue();
 
   public static final int NIL = 0;

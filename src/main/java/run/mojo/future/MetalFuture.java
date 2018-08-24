@@ -11,14 +11,31 @@ public abstract class MetalFuture<T> {
    */
   public abstract Poll<T> poll();
 
+  /**
+   *
+   * @param result
+   * @param <T>
+   * @return
+   */
   public static <T> Poll<T> ready(T result) {
     return Poll.ready(result);
   }
 
+  /**
+   *
+   * @param <T>
+   * @return
+   */
   public static <T> Poll<T> notReady() {
     return Poll.notReady();
   }
 
+  /**
+   *
+   * @param e
+   * @param <T>
+   * @return
+   */
   public static <T> Poll<T> err(Throwable e) {
     return Poll.err(e);
   }

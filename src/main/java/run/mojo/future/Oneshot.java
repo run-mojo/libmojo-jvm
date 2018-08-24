@@ -7,7 +7,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public class Oneshot<T> {
 
-  private static final jdk.internal.misc.Unsafe U = jdk.internal.misc.Unsafe.getUnsafe();
+//  private static final jdk.internal.misc.Unsafe U = jdk.internal.misc.Unsafe.getUnsafe();
 
   public final long receiver;
   public final long sender;
@@ -58,7 +58,7 @@ public class Oneshot<T> {
    */
   public static class Sender<T> {
 
-    private static final long HANDLE = U.objectFieldOffset(Sender.class, "handle");
+//    private static final long HANDLE = U.objectFieldOffset(Sender.class, "handle");
     private volatile long handle;
 
     Sender(long handle) {
@@ -86,20 +86,20 @@ public class Oneshot<T> {
       // Safely determine if the handle is valid. This operation effectively
       // drops the native value so we clear the handle to 0 to not use it again.
       final long existing = this.handle;
-      if (existing > 0L && U.compareAndSetLong(this, HANDLE, existing, 0L)) {
-        return Native.oneshotSend(handle, message) == 0;
-      } else {
+//      if (existing > 0L && U.compareAndSetLong(this, HANDLE, existing, 0L)) {
+//        return Native.oneshotSend(handle, message) == 0;
+//      } else {
         return false;
-      }
+//      }
     }
 
     public void dispose() {
       // Safely drop by guaranteeing against double-free and use-after free.
       // This handle has an implicit weak Arc reference.
       final long existing = this.handle;
-      if (existing > 0L && U.compareAndSetLong(this, HANDLE, existing, 0L)) {
+//      if (existing > 0L && U.compareAndSetLong(this, HANDLE, existing, 0L)) {
         // TODO: Drop strong Arc reference
-      }
+//      }
     }
   }
 }

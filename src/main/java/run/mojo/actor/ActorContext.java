@@ -39,6 +39,10 @@ public class ActorContext<A extends MetalActor> {
     return 0L;
   }
 
+  /**
+   *
+   * @param fut
+   */
   public void wait(ActorFuture fut) {
 
   }

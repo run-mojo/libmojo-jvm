@@ -4,17 +4,9 @@ package run.mojo;
  *
  */
 public class Native {
+  static {
+    System.loadLibrary("mojo");
+  }
 
-  /**
-   *
-   * @param len
-   * @return
-   */
-  public static native long alloc(long len);
-
-  /**
-   *
-   * @param ptr
-   */
-  public static native void dealloc(long ptr);
+  native public static void init();
 }

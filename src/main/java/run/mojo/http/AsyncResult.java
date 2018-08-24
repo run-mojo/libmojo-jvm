@@ -2,7 +2,7 @@ package run.mojo.http;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
-import jdk.internal.misc.Unsafe;
+
 import run.mojo.Catch;
 import run.mojo.Catch.Location;
 import run.mojo.MojoError;
@@ -14,8 +14,8 @@ import run.mojo.future.Oneshot.Sender;
  */
 public class AsyncResult<T> extends CompletableFuture<T> implements Result {
 
-  private static final Unsafe U = Unsafe.getUnsafe();
-  private static final long HANDLE = U.objectFieldOffset(Sender.class, "handle");
+//  private static final Unsafe U = Unsafe.getUnsafe();
+//  private static final long HANDLE = U.objectFieldOffset(Sender.class, "handle");
   public final Function<T, HttpResponse> map;
   private volatile long handle;
 
@@ -30,10 +30,10 @@ public class AsyncResult<T> extends CompletableFuture<T> implements Result {
   }
 
   void dispose() {
-    final long handle = U.getAndSetLong(this, HANDLE, 0L);
-    if (handle != 0L) {
-      Native.asyncDealloc(handle);
-    }
+//    final long handle = U.getAndSetLong(this, HANDLE, 0L);
+//    if (handle != 0L) {
+//      Native.asyncDealloc(handle);
+//    }
   }
 
   void canceled() {

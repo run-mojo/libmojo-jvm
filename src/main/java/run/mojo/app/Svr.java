@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import run.mojo.MojoError;
 import run.mojo.MojoError.Code;
-import run.mojo.actor.ActorSystem;
+import run.mojo.actor.Sys;
 import run.mojo.actor.Addr;
 import run.mojo.app.SvrBuilder.Reactor;
 
@@ -27,8 +27,8 @@ public class Svr<T> {
   private SvrBuilder<T> builder;
   // SystemAribiter
   private Addr<?> arbiter;
-  // MetalActor System
-  private ActorSystem system;
+  // MetalActor Sys
+  private Sys system;
 
   Svr(SvrBuilder<T> builder) {
     this.builder = builder;
@@ -270,7 +270,7 @@ public class Svr<T> {
     private final AtomicInteger status = new AtomicInteger(0);
 
     private Addr<?> arbiter;
-    private ActorSystem system;
+    private Sys system;
 
     public Slice(Svr<T> svr, Reactor<T> builder) {
       this.svr = svr;

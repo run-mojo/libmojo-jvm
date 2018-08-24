@@ -56,8 +56,8 @@ public class Main {
 //    var v = await(calculateAsync());
 //    var v2 = await(calculateAsync());
 //
-//    System.out.println(v);
-//    System.exit(0);
+//    Sys.out.println(v);
+//    Sys.exit(0);
   }
 
   public static Promise<String> calculateAsync() {

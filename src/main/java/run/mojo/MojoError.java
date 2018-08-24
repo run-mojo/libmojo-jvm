@@ -42,7 +42,9 @@ public class MojoError extends RuntimeException {
     CANCELED(120),
     TIMEOUT(121),
     BAD_INPUT(300),
+    NOT_HANDLED(301),
     NOMEM(200),
+    ILLEGAL_RACE(500),
     NOT_FOUND(404);
 
     public final int code;

@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.function.Consumer;
 import run.mojo.MojoError;
 import run.mojo.MojoError.Code;
-import run.mojo.actor.ActorSystem;
+import run.mojo.actor.Sys;
 import run.mojo.actor.Addr;
 import run.mojo.http.ContentEncoding;
 
@@ -184,7 +184,7 @@ public class SvrBuilder<S> {
 
     // Once started.
     public Addr<?> arbiter;
-    public ActorSystem system;
+    public Sys system;
 
     Reactor(SvrBuilder<S> builder, int index, S state) {
       this.builder = builder;

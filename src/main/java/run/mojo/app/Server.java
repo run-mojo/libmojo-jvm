@@ -4,7 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
-import run.mojo.actor.ActorSystem;
+import run.mojo.actor.Sys;
 import run.mojo.actor.Addr;
 
 /**
@@ -29,7 +29,7 @@ public class Server implements Closeable {
    */
   private Addr<?> sync;
 
-  private ActorSystem system;
+  private Sys system;
 
   Server(long handle) {
 
