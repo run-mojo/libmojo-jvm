@@ -32,7 +32,14 @@ public abstract class MetalActor<
       Code.NOT_HANDLED
   );
 
+  private C context = createContext(0);
   private volatile boolean started;
+
+  protected C ctx() {
+    return context;
+  }
+
+  protected abstract C createContext(long handle);
 
   /**
    *
@@ -46,33 +53,27 @@ public abstract class MetalActor<
    * Invoked from JNI as the first step in the MetalActor's lifecycle.
    */
   protected void started0(long handle, long context) {
-    final C ctx = createContext(context);
-    assert ctx != null;
-    started(ctx);
+    this.context.handle = context;
+    started();
   }
 
   /**
    * Method is called when actor get polled first time.
-   *
-   * @param ctx ActorContext
    */
-  public void started(C ctx) {
+  public void started() {
   }
 
   protected void restarting0(long context) {
-    final C ctx = createContext(context);
-    assert ctx != null;
-    restarting(ctx);
+    this.context.handle = context;
+    restarting();
   }
 
-  protected void restarting(C ctx) {
-
+  protected void restarting() {
   }
-
-  protected abstract C createContext(long handle);
 
   protected int stopping0(long context) {
-    final Running result = stopping(createContext(context));
+    this.context.handle = context;
+    final Running result = stopping();
     if (result == null) {
       return Running.STOP.code;
     } else {
@@ -87,24 +88,22 @@ public abstract class MetalActor<
    *
    * MetalActor could restore from stopping state by returning `Running.CONTINUE` value.
    *
-   * @param ctx ActorContext
    * @return Running enum code
    */
-  public Running stopping(C ctx) {
+  public Running stopping() {
     return Running.STOP;
   }
 
   protected void stopped0(long context) {
-    stopped(createContext(context));
+    this.context.handle = context;
+    stopped();
   }
 
   /**
    * Method is called after an actor is stopped, it can be used to perform any needed cleanup work
    * or spawning more actors. This is final state, after this call the actor gets dropped.
-   *
-   * @param ctx ActorContext
    */
-  protected void stopped(C ctx) {
+  protected void stopped() {
   }
 
   /**
@@ -122,29 +121,28 @@ public abstract class MetalActor<
       long message,
       Object messageObject
   ) {
-    final C ctx = createContext(context);
-    assert ctx != null;
+    this.context.handle = context;
 
     if (messageObject != null) {
-      message(ctx, future, messageObject);
+      message(future, messageObject);
       return;
     }
 
     switch (type) {
       case BYTES:
-        message(ctx, future, Bytes.from(message));
+        message(future, Bytes.from(message));
         break;
       case BYTES_MUT:
-        message(ctx, future, BytesMut.from(message));
+        message(future, BytesMut.from(message));
         break;
 
       default:
-        unknownMessage(ctx, future, type, message);
+        unknownMessage(future, type, message);
         break;
     }
   }
 
-  protected void unknownMessage(C ctx, long future, int type, long message) {
+  protected void unknownMessage(long future, int type, long message) {
 
   }
 
@@ -152,23 +150,18 @@ public abstract class MetalActor<
    * Java Object message handler. Raw java objects are valid to pass. The object is pinned in the GC
    * while in-flight and released after it calls this method.
    */
-  protected void message(C ctx, long future, Object message) {
-    if (future != 0L) {
-      onAsk(ctx, Ask.create(future), message);
-    } else {
-      onTell(ctx, message);
-    }
+  protected void message(long future, Object message) {
+
   }
 
-  protected void onUnhandled(C ctx, Ask<Object> future, Object message) {
-    future.completeExceptionally(NOT_HANDLED);
-  }
+  /**
+   *
+   */
+  public static class Native {
+    native static void stop(long handle);
 
-  protected void onAsk(C ctx, Ask<Object> future, Object message) {
-    onUnhandled(ctx, future, message);
-  }
+    native static void terminate(long handle);
 
-  protected void onTell(C ctx, Object message) {
-    onUnhandled(ctx, null, message);
+    native static int state(long handle);
   }
 }

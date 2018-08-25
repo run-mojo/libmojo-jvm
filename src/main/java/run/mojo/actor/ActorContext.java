@@ -9,7 +9,7 @@ import java.util.function.BiConsumer;
  */
 public class ActorContext<A extends MetalActor> {
 
-  private long handle;
+  long handle;
 
   protected ActorContext(long handle) {
     this.handle = handle;
@@ -56,19 +56,19 @@ public class ActorContext<A extends MetalActor> {
   }
 
 
-  public void forceSend(Message msg) {
+  public void forceSend(MessageType msg) {
 
   }
 
-  public void trySend(Message msg) {
+  public void trySend(MessageType msg) {
 
   }
 
-  public void send(Message msg) {
+  public void send(MessageType msg) {
 
   }
 
-  public void sendLater(Message msg, Duration dur) {
+  public void sendLater(MessageType msg, Duration dur) {
 
   }
 

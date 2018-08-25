@@ -35,12 +35,12 @@ public interface Result {
 //  private long receiver;
 //  private long sender;
 //
-//  private Result(HttpResponse response) {
+//  private Ask(HttpResponse response) {
 //    this.response = response;
 ////    this.channel = null;
 //  }
 //
-//  private Result(long receiver, long sender) {
+//  private Ask(long receiver, long sender) {
 //    this.response = null;
 //    this.receiver = receiver;
 //    this.sender = sender;
@@ -71,8 +71,8 @@ public interface Result {
 //    }
 //  }
 //
-//  public static Result result(HttpResponse response) {
-//    return new Result(response);
+//  public static Ask result(HttpResponse response) {
+//    return new Ask(response);
 //  }
 //
 

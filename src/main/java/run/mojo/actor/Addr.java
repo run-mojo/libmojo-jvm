@@ -11,11 +11,11 @@ public class Addr<A extends MetalActor> extends Box {
     return true;
   }
 
-  public <M extends Message> void doSend(M msg) {
+  public <M extends MessageType> void doSend(M msg) {
 
   }
 
-  public <M extends Message> void send(M msg) {
+  public <M extends MessageType> void send(M msg) {
 
   }
 

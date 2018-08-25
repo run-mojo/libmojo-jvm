@@ -1,5 +1,9 @@
 package run.mojo.actor;
 
+import io.protostuff.LinkedBuffer;
+import io.protostuff.ProtostuffIOUtil;
+import io.protostuff.Schema;
+import io.protostuff.runtime.RuntimeSchema;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import run.mojo.Catch;
@@ -7,6 +11,7 @@ import run.mojo.Catch.Location;
 import run.mojo.MojoError;
 import run.mojo.MojoError.Code;
 import run.mojo.Utils;
+import run.mojo.message.Message.Foo;
 import sun.misc.Unsafe;
 
 /**
@@ -46,10 +51,25 @@ public class RawFuture<R> extends CompletableFuture<R> {
     System.out.println("RawPointer.canceled");
   }
 
+  static final Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
+  static final LinkedBuffer buffer = LinkedBuffer.allocate(512);
+  static byte[] protostuff;
+
   /**
    * libmojo Callback
    */
   public static void finish(long kind, long handle, long message) {
+    final LinkedBuffer buffer = LinkedBuffer.allocate(512);
+    Foo foo = new Foo("foo", 1);
+    byte[] protostuff;
+    try {
+      protostuff = ProtostuffIOUtil.toByteArray(foo, schema, buffer);
+    } finally {
+      buffer.clear();
+    }
+
+    Foo fooParsed = schema.newMessage();
+    ProtostuffIOUtil.mergeFrom(protostuff, fooParsed, schema);
 //    System.out.println("RawPointer.finish");
   }
 

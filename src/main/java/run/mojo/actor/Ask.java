@@ -1,71 +1,22 @@
 package run.mojo.actor;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
-
 /**
  *
  */
-public class Ask<R> extends CompletableFuture<R> {
+public class Ask<R> {
+  public final R result;
+  public final long future;
 
-  private long handle;
-
-  private Ask(long handle) {
-    this.handle = handle;
+  private Ask(R result, long future) {
+    this.result = result;
+    this.future = future;
   }
 
-  public boolean isRequest() {
-    return handle != 0L;
+  public static <R> Ask<R> result(R result) {
+    return new Ask<>(result, 0L);
   }
 
-  /**
-   *
-   * @param <R>
-   * @return
-   */
-  public static <R> Ask<R> create(long handle) {
-    return new Ask<>(handle);
-  }
-
-  /**
-   *
-   * @param <R>
-   * @return
-   */
-  public static <R> Ask<R> withTimeout(long handle, long millis) {
-    return new Ask<>(handle);
-  }
-
-  /**
-   *
-   * @param <R>
-   * @return
-   */
-  public static <R> Ask<R> withTimeout(long handle, long value, TimeUnit unit) {
-    return withTimeout(handle, unit.toMillis(value));
-  }
-
-  public long handle() {
-    return handle;
-  }
-
-  @Override
-  public boolean complete(R value) {
-    return super.complete(value);
-  }
-
-  @Override
-  public boolean completeExceptionally(Throwable ex) {
-    return super.completeExceptionally(ex);
-  }
-
-
-  /**
-   *
-   * @param handle
-   * @param message
-   */
-  public static void send(long handle, Object message) {
-
+  public static <R> Ask<R> future() {
+    return new Ask<>(null, 0L);
   }
 }

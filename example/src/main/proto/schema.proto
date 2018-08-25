@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_package = "run.mojo.example";
+
+message Person {
+  string name = 1;
+  int32 id = 2;
+  string email = 3;
+}
+
+message SearchRequest {}
+
+message SearchResponse {}
+
+message UserEvent {
+  Person person = 1;
+}
